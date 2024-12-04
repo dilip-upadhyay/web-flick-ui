@@ -28,6 +28,8 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
     display: block;
     border-radius: 16px;
   }
+
+  
     
   .cotainer {
     position: relative;
@@ -44,7 +46,12 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
     top: 20px;
     right:20px;
   }
-  `
+  
+
+  `,
+  host: {
+    '[style.grid-area]': '"span " + data().rows + " / span " + data().columns',
+  }
 
 })
 export class ContainerComponent {

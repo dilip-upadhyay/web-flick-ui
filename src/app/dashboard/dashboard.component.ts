@@ -17,6 +17,7 @@ import { Widget } from '../models/widget';
 .dashboard{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-auto-rows: 350px;
   grid-gap: 16px;
   padding: 16px;
   box-sizing: border-box;
@@ -33,6 +34,8 @@ export class DashboardComponent {
   }, {
     id: 2,
     name: 'Widget 2',
+    rows: 2,
+    columns: 2,
     content: ContainerComponent
   }, {
     id: 3,
