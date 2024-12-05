@@ -14,7 +14,7 @@ import { Widget } from '../../../models/widget';
 </button>
       <div>
         Width
-        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateColumnsSettings($event)" [value]="data().columns ?? 1">
+        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'columns')" [value]="data().columns ?? 1">
           <mat-button-toggle [value]="1">1</mat-button-toggle>
           <mat-button-toggle [value]="2">2</mat-button-toggle>
           <mat-button-toggle [value]="3">3</mat-button-toggle>
@@ -23,7 +23,7 @@ import { Widget } from '../../../models/widget';
       </div>
       <div>
         Height
-        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateRowsSettings($event)" [value]="data().rows ?? 1">
+        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'rows')" [value]="data().rows ?? 1">
           <mat-button-toggle [value]="1">1</mat-button-toggle>
           <mat-button-toggle [value]="2">2</mat-button-toggle>
           <mat-button-toggle [value]="3">3</mat-button-toggle>
@@ -70,15 +70,11 @@ import { Widget } from '../../../models/widget';
 })
 export class WidgetSettingComponent {
 
-  updateColumnsSettings(arg0: any) {
-    console.log(arg0);
-    this.data().columns = arg0.value ?? this.data().columns;
+  updateSettings(event: any, property: 'columns' | 'rows') {
+    this.data()[property] = event.value;
   }
 
-  updateRowsSettings(arg0: any) {
-    console.log(arg0);
-    this.data().rows = arg0.value ?? this.data().rows;
-  }
+
   showSettings = model<boolean>(false);
   data: InputSignal<Widget> = input.required<Widget>();
 
