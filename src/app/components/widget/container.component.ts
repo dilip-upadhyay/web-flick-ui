@@ -16,7 +16,7 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
         <mat-icon >settings</mat-icon>
       </button>
       @if (showSettings()) {
-        <app-widget-setting [(showSettings)]="showSettings"></app-widget-setting>
+        <app-widget-setting [(showSettings)]="showSettings" [data]="data()"></app-widget-setting>
       }
       
     </div>
@@ -57,6 +57,7 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
 export class ContainerComponent {
 
   data: InputSignal<Widget> = input.required<Widget>();
+
   showSettings = signal(false);
 
 }
