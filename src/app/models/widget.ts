@@ -6,4 +6,5 @@ export interface Widget {
     rows?: number;
     columns?: number;
     content: Type<any>;
+    showSettings?: boolean;
 }

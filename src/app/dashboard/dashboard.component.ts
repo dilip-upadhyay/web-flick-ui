@@ -9,7 +9,7 @@ import { Widget } from '../models/widget';
   template: `
   <div class="dashboard">
   @for (container of data; track $index) {
-   <app-container [data]="container"/>
+   <app-container [containerList]="data" [data]="container"/>
   }
   </div>
   `,

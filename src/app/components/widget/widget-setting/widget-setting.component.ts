@@ -9,27 +9,33 @@ import { Widget } from '../../../models/widget';
   standalone: true,
   imports: [MatButtonModule, MatIcon, MatButtonToggleModule],
   template: `
-    <button mat-icon-button class="close-button" (click)="showSettings.set(false)">
+    <button mat-icon-button class="close-button" (click)="data().showSettings = false">
       <mat-icon>close</mat-icon>
-</button>
-      <div>
-        Width
-        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'columns')" [value]="data().columns ?? 1">
-          <mat-button-toggle [value]="1">1</mat-button-toggle>
-          <mat-button-toggle [value]="2">2</mat-button-toggle>
-          <mat-button-toggle [value]="3">3</mat-button-toggle>
-          <mat-button-toggle [value]="4">4</mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
-      <div>
-        Height
-        <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'rows')" [value]="data().rows ?? 1">
-          <mat-button-toggle [value]="1">1</mat-button-toggle>
-          <mat-button-toggle [value]="2">2</mat-button-toggle>
-          <mat-button-toggle [value]="3">3</mat-button-toggle>
-          <mat-button-toggle [value]="4">4</mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
+    </button>
+    <div>
+      Width
+    <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'columns')" [value]="data().columns ?? 1">
+        <mat-button-toggle [value]="1">1</mat-button-toggle>
+        <mat-button-toggle [value]="2">2</mat-button-toggle>
+        <mat-button-toggle [value]="3">3</mat-button-toggle>
+        <mat-button-toggle [value]="4">4</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div>
+      Height
+      <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'rows')" [value]="data().rows ?? 1">
+        <mat-button-toggle [value]="1">1</mat-button-toggle>
+        <mat-button-toggle [value]="2">2</mat-button-toggle>
+        <mat-button-toggle [value]="3">3</mat-button-toggle>
+        <mat-button-toggle [value]="4">4</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <button mat-icon-button class="move-forward" (click)="swapWidgetsById(this.data().id, 'forward')">
+      <mat-icon >chevron_right</mat-icon>
+    </button>
+    <button mat-icon-button class="move-backward" (click)="swapWidgetsById(this.data().id, 'backward')">
+      <mat-icon >chevron_left</mat-icon>
+    </button>
   `,
   styles: `
   :host{
@@ -62,7 +68,21 @@ import { Widget } from '../../../models/widget';
     gap: 8px;
     align-items: center;
     margin-bottom: 8px;
-  }
+    }
+    .move-forward {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -5px;
+    }
+
+    .move-backward {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -5px;
+    }
+  
 
 
   
@@ -70,12 +90,29 @@ import { Widget } from '../../../models/widget';
 })
 export class WidgetSettingComponent {
 
+  data: InputSignal<Widget> = input.required<Widget>();
+  containerList: InputSignal<Widget[]> = input.required<Widget[]>();
+
   updateSettings(event: any, property: 'columns' | 'rows') {
     this.data()[property] = event.value;
   }
 
+  swapWidgetsById(id1: number, direction: 'forward' | 'backward') {
+    const index1 = this.containerList().findIndex(widget => widget.id === id1);
+    if ((index1 === 0 && direction === 'backward') || (index1 === this.containerList().length-1 && direction === 'forward')) {
+      return;
+    }
 
-  showSettings = model<boolean>(false);
-  data: InputSignal<Widget> = input.required<Widget>();
+    const index2 = direction === 'forward' ? index1+1 : direction === 'backward' ? index1-1: index1;
+
+    if (index1 === -1 || index2 === -1) {
+      console.error('Invalid widget IDs');
+      return;
+    }
+    const temp = this.containerList()[index1];
+    this.containerList()[index1] = this.containerList()[index2];
+    this.containerList()[index2] = temp;
+
+  }
 
 }

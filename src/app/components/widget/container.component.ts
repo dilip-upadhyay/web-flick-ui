@@ -12,11 +12,11 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
   
     <div class="cotainer mat-elevation-z3">
       <h3 class="m-0">{{data().name}}</h3>
-      <button mat-icon-button class="settings-button" (click)="showSettings.set(true)">
+      <button mat-icon-button class="settings-button" (click)="data().showSettings = true">
         <mat-icon >settings</mat-icon>
       </button>
-      @if (showSettings()) {
-        <app-widget-setting [(showSettings)]="showSettings" [data]="data()"></app-widget-setting>
+      @if (data().showSettings) {
+        <app-widget-setting  [data]="data()" [containerList]="containerList()"></app-widget-setting>
       }
       
     </div>
@@ -57,7 +57,7 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
 export class ContainerComponent {
 
   data: InputSignal<Widget> = input.required<Widget>();
+  containerList: InputSignal<Widget[]> = input.required<Widget[]>();
 
-  showSettings = signal(false);
 
 }
