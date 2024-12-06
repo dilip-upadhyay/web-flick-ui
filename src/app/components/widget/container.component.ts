@@ -18,6 +18,11 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
       @if (data().showSettings) {
         <app-widget-setting  [data]="data()" [containerList]="containerList()"></app-widget-setting>
       }
+      @if ((data().children ?? []).length > 0) {
+        @for (container of data().children; track $index) {
+          <app-container [containerList]="data().children ?? []" [data]="container"/>
+          }
+      }
       
     </div>
   
@@ -32,6 +37,7 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
   
     
   .cotainer {
+    display: flex;
     position: relative;
     height: 100%;
     width: 100%;
