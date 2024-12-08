@@ -12,63 +12,53 @@ import { ResizableModule } from 'angular-resizable-element';
   imports: [ContainerComponent, DragDropModule, ResizableModule],
   template: `
   <div class="admin-dashboard">
-      <div class="left-panel" [style]="'width:'+newWidth+'px'"   mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event)">
-          <div class="widget-container" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event)">
-            sdfsdfdf
-          </div>
-          <div class="drag-div" draggable (drag)="onResizeEnd($event)" (dragend)="onResizeEnd($event)">
-          </div>
+      <div class="left-panel" >
+          a,sjdhgajdfas
       </div>
       <div class="bodyClass">
         @for (container of data; track $index) {
         <app-container [containerList]="data" [data]="container"/>
         }
       </div>
-      
   </div>
   `,
   styles: `
   .left-panel{
-    display: flex;
     height: 100%;
-    width: 10%;
+    width: 100px;
     background-color: #f0f0f0;
     overflow-x: scroll;
-    border: 0px;
-    padding: 0px;
   }
   .drag-div{
     right: 0;
     height: 100%;
     width: 7px;
-    background-color: red;
+    background-color: inherit;
+    border-right: solid 7px #ccc;
     cursor: e-resize;
   }
   .admin-dashboard {
     display: flex;
-    grid-template-columns: 100px 1fr;
+    flex-direction: row;
     height: 100%;
     width: 100%;
   }
 
   .widget-container {
     position: relative;    
-    width: 95%;
+    width: 10%;
     height: 100%;
     background-color: #f0f0f0;
     overflow-x: auto;
-    border: 0px;
-    padding: 0px;
   }
   .bodyClass{
-    width: 90%;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-auto-rows: 90px;
-    grid-gap: 10px;
-    padding: 10px;
-    box-sizing: border-box;
+  display: grid;
+  width: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-auto-rows: 90%;
+  grid-gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 
 }
 

@@ -13,22 +13,23 @@ import { Widget } from '../../../models/widget';
       <mat-icon>close</mat-icon>
     </button>
     <div>
+    <button mat-icon-button  (click)="updateSettings($event, 'columns', 'decrease')">
+        <mat-icon >remove_circle</mat-icon>
+      </button>
       Width
-    <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'columns')" [value]="data().columns ?? 1">
-        <mat-button-toggle [value]="1">1</mat-button-toggle>
-        <mat-button-toggle [value]="2">2</mat-button-toggle>
-        <mat-button-toggle [value]="3">3</mat-button-toggle>
-        <mat-button-toggle [value]="4">4</mat-button-toggle>
-      </mat-button-toggle-group>
+      <button mat-icon-button  (click)="updateSettings($event, 'columns', 'increase')">
+        <mat-icon >add_circle</mat-icon>
+      </button>
     </div>
     <div>
+       
+      <button mat-icon-button  (click)="updateSettings($event, 'rows', 'decrease')">
+        <mat-icon >remove_circle</mat-icon>
+      </button>
       Height
-      <mat-button-toggle-group hideSingleSelectionIndicator="true" (change)="updateSettings($event, 'rows')" [value]="data().rows ?? 1">
-        <mat-button-toggle [value]="1">1</mat-button-toggle>
-        <mat-button-toggle [value]="2">2</mat-button-toggle>
-        <mat-button-toggle [value]="3">3</mat-button-toggle>
-        <mat-button-toggle [value]="4">4</mat-button-toggle>
-      </mat-button-toggle-group>
+      <button mat-icon-button  (click)="updateSettings($event, 'rows', 'increase')">
+        <mat-icon >add_circle</mat-icon>
+      </button>
     </div>
     <button mat-icon-button class="move-forward" (click)="swapWidgetsById(this.data().id, 'forward')">
       <mat-icon >chevron_right</mat-icon>
@@ -93,8 +94,9 @@ export class WidgetSettingComponent {
   data: InputSignal<Widget> = input.required<Widget>();
   containerList: InputSignal<Widget[]> = input.required<Widget[]>();
 
-  updateSettings(event: any, property: 'columns' | 'rows') {
-    this.data()[property] = event.value;
+  updateSettings(event: any, property: 'columns' | 'rows', action: 'increase' | 'decrease') {
+    this.data()[property] = 'increase' === action? (this.data()[property]?? 1) + 1 : 'decrease' === action? (this.data()[property]?? 1) - 1 : this.data()[property];
+    console.log(this.data());
   }
 
   swapWidgetsById(id1: number, direction: 'forward' | 'backward') {
