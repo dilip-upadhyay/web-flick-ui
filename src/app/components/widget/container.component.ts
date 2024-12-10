@@ -1,17 +1,20 @@
-import { Component,input, InputSignal, signal } from '@angular/core';
+import { Component, input, InputSignal, signal, OnInit } from '@angular/core';
 import { Widget } from '../../models/widget';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIcon } from '@angular/material/icon'
 import { WidgetSettingComponent } from "./widget-setting/widget-setting.component";
+import { FormInputComponent } from '../elements/form-input/form-input.component';
+import { NgComponentOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-container',
   standalone: true,
-  imports: [MatButtonModule, MatIcon, WidgetSettingComponent],
+  imports: [MatButtonModule, MatIcon, WidgetSettingComponent, NgComponentOutlet],
   template: `
   
     <div class="cotainer mat-elevation-z3">
-        <h3 class="m-0">{{data().name}}</h3>
+        <!-- <h3 class="m-0">{{data().name}}</h3> -->
+        
         <button mat-icon-button class="settings-button" (click)="data().showSettings = true">
           <mat-icon >settings</mat-icon>
         </button>
@@ -20,7 +23,14 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
         }
         @if ((data().children ?? []).length > 0) {
           @for (container of data().children; track $index) {
-            <app-container [containerList]="data().children ?? []" [data]="container"/>
+             @if (container.content) {
+              <div class="widget-container">
+              <ng-container [ngComponentOutlet]="container.content" [ngComponentOutletInputs]="{ label: container.name }"/>
+              </div> 
+            }@else {
+              <app-container [containerList]="data().children ?? []" [data]="container"/>
+             }
+            
             }
         }
       
@@ -61,10 +71,14 @@ import { WidgetSettingComponent } from "./widget-setting/widget-setting.componen
   }
 
 })
-export class ContainerComponent {
+export class ContainerComponent implements OnInit{
 
   data: InputSignal<Widget> = input.required<Widget>();
   containerList: InputSignal<Widget[]> = input.required<Widget[]>();
+
+  ngOnInit(){
+    console.log(this.data());
+  }
 
 
 }

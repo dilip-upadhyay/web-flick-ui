@@ -3,6 +3,7 @@ import { ContainerComponent } from '../components/widget/container.component';
 import { Widget } from '../models/widget';
 import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ResizableModule } from 'angular-resizable-element';
+import { FormInputComponent } from '../components/elements/form-input/form-input.component';
 
 
 
@@ -101,6 +102,25 @@ export class DashboardComponent {
     rows: 8,
     columns: 16,
     content: ContainerComponent,
+    children: [{
+      id: 2,
+      name: 'First Name',
+      rows: 4,
+      columns: 4,
+      content: FormInputComponent
+    }, {
+      id: 3,
+      name: 'Last Name',
+      rows: 4,
+      columns: 4
+    }]
+    // children: [{
+    //   id: 10,
+    //   name: 'Widget 1_1',
+    //   rows: 4,
+    //   columns: 4,
+    //   content: FormInputComponent,
+    // }]},
     // children: [{
     //   id: 4,
     //   name: 'Widget 1_1',
@@ -127,18 +147,18 @@ export class DashboardComponent {
     //     columns: 1,
     //     content: ContainerComponent
     //   }]
-  }, {
-    id: 2,
-    name: 'Widget 2',
-    rows: 4,
-    columns: 4,
-    content: ContainerComponent
-  }, 
+  // }, {
+  //   id: 2,
+  //   name: 'Widget 2',
+  //   rows: 4,
+  //   columns: 4,
+  //   content: ContainerComponent
+  // }, 
   // {
   //   id: 3,
   //   name: 'Widget 3',
   //   content: ContainerComponent
   // },
     
-  ];
+}];
 }
