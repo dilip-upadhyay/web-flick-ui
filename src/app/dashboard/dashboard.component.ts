@@ -38,11 +38,13 @@ import { ResizableModule } from 'angular-resizable-element';
     padding: 0px;
   }
   .drag-div{
+    position: relative;
+    z-index: 2;
     right: 0;
     height: 100%;
-    width: 7px;
-    background-color: red;
-    cursor: e-resize;
+    width: 10px;
+    background-color: gray;
+    cursor: col-resize;
   }
   .admin-dashboard {
     display: flex;
@@ -53,7 +55,7 @@ import { ResizableModule } from 'angular-resizable-element';
 
   .widget-container {
     position: relative;    
-    width: 95%;
+    width: 100%;
     height: 100%;
     background-color: #f0f0f0;
     overflow-x: auto;
@@ -95,47 +97,48 @@ export class DashboardComponent {
   
   data: Widget[] = [{
     id: 1,
-    name: 'Widget 1',
-    rows: 1,
-      columns: 1,
+    name: 'User Details',
+    rows: 8,
+    columns: 16,
     content: ContainerComponent,
-    children: [{
-      id: 4,
-      name: 'Widget 1_1',
-      rows: 4,
-      columns: 4,
-      content: ContainerComponent,
-      // children: [{
-      //   id: 6,
-      //   name: 'Widget 1_1',
-      //   rows: 1,
-      //   columns: 1,
-      //   content: ContainerComponent
-      // },{
-      //   id: 7,
-      //   name: 'Widget 1_2',
-      //   rows: 1,
-      //   columns: 1,
-      //   content: ContainerComponent
-      // }]
-    },{
-      id: 5,
-      name: 'Widget 1_2',
-      rows: 1,
-      columns: 1,
-      content: ContainerComponent
-    }]
+    // children: [{
+    //   id: 4,
+    //   name: 'Widget 1_1',
+    //   rows: 4,
+    //   columns: 4,
+    //   content: ContainerComponent,
+    //   children: [{
+    //     id: 6,
+    //     name: 'Widget 1_1',
+    //     rows: 1,
+    //     columns: 1,
+    //     content: ContainerComponent
+    //   },{
+    //     id: 7,
+    //     name: 'Widget 1_2',
+    //     rows: 1,
+    //     columns: 1,
+    //     content: ContainerComponent
+    //   }]
+    //   },{
+    //     id: 5,
+    //     name: 'Widget 1_2',
+    //     rows: 1,
+    //     columns: 1,
+    //     content: ContainerComponent
+    //   }]
   }, {
     id: 2,
     name: 'Widget 2',
-    rows: 1,
-    columns: 1,
+    rows: 4,
+    columns: 4,
     content: ContainerComponent
-  }, {
-    id: 3,
-    name: 'Widget 3',
-    content: ContainerComponent
-  },
+  }, 
+  // {
+  //   id: 3,
+  //   name: 'Widget 3',
+  //   content: ContainerComponent
+  // },
     
   ];
 }
