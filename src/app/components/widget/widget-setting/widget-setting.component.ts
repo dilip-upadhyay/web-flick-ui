@@ -41,7 +41,7 @@ import { Widget } from '../../../models/widget';
   styles: `
   :host{
     position: absolute;
-    z-index: 2;
+    z-index: 100;
     background: whitesmoke;
     color: black;
     top:0;
@@ -62,6 +62,7 @@ import { Widget } from '../../../models/widget';
       position: absolute;
       top: 0;
       right: 0;
+      z-index: 101;
     }
  
     div {

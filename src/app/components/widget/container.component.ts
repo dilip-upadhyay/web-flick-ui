@@ -25,7 +25,7 @@ import { NgComponentOutlet } from '@angular/common';
           @for (container of data().children; track $index) {
              @if (container.content) {
               <div class="widget-container">
-              <ng-container [ngComponentOutlet]="container.content" [ngComponentOutletInputs]="{ label: container.name }"/>
+              <ng-container [ngComponentOutlet]="container.content" [ngComponentOutletInputs]="{ data: container}"/>
               </div> 
             }@else {
               <app-container [containerList]="data().children ?? []" [data]="container"/>
@@ -62,6 +62,7 @@ import { NgComponentOutlet } from '@angular/common';
     position: absolute;
     top: 20px;
     right:20px;
+    z-index: 100;
   }
   
 

@@ -5,6 +5,7 @@ export interface Widget {
     name: string;
     rows?: number;
     columns?: number;
+    value?: any;
     content?: Type<any>;
     showSettings?: boolean;
     children?: Widget[];

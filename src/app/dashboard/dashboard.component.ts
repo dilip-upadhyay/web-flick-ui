@@ -105,60 +105,24 @@ export class DashboardComponent {
     children: [{
       id: 2,
       name: 'First Name',
+      value: 'John',
       rows: 4,
       columns: 4,
       content: FormInputComponent
     }, {
       id: 3,
       name: 'Last Name',
-      rows: 4,
-      columns: 4
-    }]
-    // children: [{
-    //   id: 10,
-    //   name: 'Widget 1_1',
-    //   rows: 4,
-    //   columns: 4,
-    //   content: FormInputComponent,
-    // }]},
-    // children: [{
-    //   id: 4,
-    //   name: 'Widget 1_1',
-    //   rows: 4,
-    //   columns: 4,
-    //   content: ContainerComponent,
-    //   children: [{
-    //     id: 6,
-    //     name: 'Widget 1_1',
-    //     rows: 1,
-    //     columns: 1,
-    //     content: ContainerComponent
-    //   },{
-    //     id: 7,
-    //     name: 'Widget 1_2',
-    //     rows: 1,
-    //     columns: 1,
-    //     content: ContainerComponent
-    //   }]
-    //   },{
-    //     id: 5,
-    //     name: 'Widget 1_2',
-    //     rows: 1,
-    //     columns: 1,
-    //     content: ContainerComponent
-    //   }]
-  // }, {
-  //   id: 2,
-  //   name: 'Widget 2',
-  //   rows: 4,
-  //   columns: 4,
-  //   content: ContainerComponent
-  // }, 
-  // {
-  //   id: 3,
-  //   name: 'Widget 3',
-  //   content: ContainerComponent
-  // },
+      rows: 1,
+      columns: 4,
+      content: FormInputComponent
+    }, {
+      id: 4,
+      name: 'Address',
+      rows: 1,
+      columns: 4,
+      content: FormInputComponent
+    }
+  ]
     
 }];
 }
