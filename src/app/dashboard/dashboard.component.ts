@@ -1,26 +1,33 @@
 import { Component } from '@angular/core';
 import { ContainerComponent } from '../components/widget/container.component';
 import { Widget } from '../models/widget';
-import { DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragMove, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormInputComponent } from '../components/elements/form-input/form-input.component';
+import { MatIcon } from '@angular/material/icon';
 
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ContainerComponent, DragDropModule, ResizableModule],
+  imports: [ContainerComponent, DragDropModule, ResizableModule, MatIcon],
   template: `
   <div class="admin-dashboard">
       <div class="left-panel" [style]="'width:'+newWidth+'px'"   mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event)">
           <div class="widget-container" mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event)">
-            sdfsdfdf
+          
           </div>
-          <div class="drag-div" draggable (drag)="onResizeEnd($event)" (dragend)="onResizeEnd($event)">
+          <div class="elements" (cdkDragStarted)="dragStart($event)" 
+          (cdkDragMoved)="moved($event)"  
+          (cdkDragEndeds)="drop($event)"
+          cdkDrag cdkDragBoundary=".bodyClass"  cdkDragHandle>
+          <mat-icon >input</mat-icon>
+          </div>
+          <div class="drag-div"  (drag)="onResizeEnd($event)" (dragend)="onResizeEnd($event)">
           </div>
       </div>
-      <div class="bodyClass">
+      <div cdkDropList ondrop="drop($event)"  class="bodyClass">
         @for (container of data; track $index) {
         <app-container [containerList]="data" [data]="container"/>
         }
@@ -29,6 +36,11 @@ import { FormInputComponent } from '../components/elements/form-input/form-input
   </div>
   `,
   styles: `
+
+  .elements{
+    position: absolute;
+    z-index: 200;
+  }
   .left-panel{
     display: flex;
     height: 100%;
@@ -78,6 +90,13 @@ import { FormInputComponent } from '../components/elements/form-input/form-input
   `
 })
 export class DashboardComponent {
+moved($event: CdkDragMove<any>) {
+  console.log('event', $event);
+//throw new Error('Method not implemented.');
+}
+dragStart($event: any) {
+//throw new Error('Method not implemented.');
+}
 
   newWidth: number = 100;
   gragDirection: string = 'right | left';
@@ -92,8 +111,7 @@ export class DashboardComponent {
   }
 
   drop(event: any) {
-    const previousIndex = this.data.findIndex((d) => d === event.item.data);
-    moveItemInArray(this.data, previousIndex, event.currentIndex);
+    console.log('event', event);
   }
   
   data: Widget[] = [{
