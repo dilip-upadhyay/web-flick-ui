@@ -9,4 +9,5 @@ export interface Widget {
     content?: Type<any>;
     showSettings?: boolean;
     children?: Widget[];
+    showOptions?: boolean;
 }
