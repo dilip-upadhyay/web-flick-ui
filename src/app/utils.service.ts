@@ -2,11 +2,18 @@ import { Injectable } from '@angular/core';
 import {Widget} from "./models/widget";
 import {FormInputComponent} from "./components/elements/form-input/form-input.component";
 import {ContainerComponent} from "./components/widget/container.component";
+import {DataGridComponent} from "./components/elements/data-grid/data-grid.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+    sampleData = [
+        { id: 1, name: 'John Doe', age: 28, email: 'john.doe@example.com' },
+        { id: 2, name: 'Jane Smith', age: 34, email: 'jane.smith@example.com' },
+        { id: 3, name: 'Michael Johnson', age: 45, email: 'michael.johnson@example.com' },
+        { id: 4, name: 'Emily Davis', age: 23, email: 'emily.davis@example.com' }
+    ];
 
   constructor() { }
 
@@ -36,7 +43,7 @@ export class UtilsService {
         containerList[index2] = temp;
 
     }
-    addItem(type: any | "input" | "container", data: Widget | any) {
+    addItem(type: any | "input" | "container"| "data-grid", data: Widget | any) {
         console.log('Add item');
 
         // Implement add item logic here
@@ -59,6 +66,17 @@ export class UtilsService {
                     content: ContainerComponent,
                     name: "new container",
                     value: "new value"
+                };
+                data.children?.push(child);
+                break;
+            }
+            case "data-grid": {
+                let child: Widget = {
+                    id: this.uuidv4(),
+                    children: [],
+                    content: DataGridComponent,
+                    name: "new container",
+                    value: {jsonData:this.sampleData, displayedColumns: Object.keys(this.sampleData[0])}
                 };
                 data.children?.push(child);
                 break;

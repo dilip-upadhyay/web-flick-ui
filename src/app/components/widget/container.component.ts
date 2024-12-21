@@ -26,6 +26,7 @@ import {UtilsService} from "../../utils.service";
                 <mat-menu #menuItems="matMenu">
                     <button mat-menu-item (click)="utils.addItem('input', data())">input field</button>
                     <button mat-menu-item (click)="utils.addItem('container', data())">container</button>
+                    <button mat-menu-item (click)="utils.addItem('data-grid', data())">data-grid/table</button>
                 </mat-menu>
                 <button mat-menu-item (click)="utils.openSettings(data())">Settings</button>
                 <button mat-menu-item (click)="utils.removeItem(data(), containerList())">Remove</button>
