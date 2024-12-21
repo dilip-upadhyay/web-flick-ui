@@ -1,7 +1,7 @@
 import { Type } from "@angular/core";
 
 export interface Widget {
-    id: number;
+    id: string;
     name: string;
     rows?: number;
     columns?: number;

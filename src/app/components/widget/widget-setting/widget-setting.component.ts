@@ -100,7 +100,7 @@ export class WidgetSettingComponent {
     console.log(this.data());
   }
 
-  swapWidgetsById(id1: number, direction: 'forward' | 'backward') {
+  swapWidgetsById(id1: string, direction: 'forward' | 'backward') {
     const index1 = this.containerList().findIndex(widget => widget.id === id1);
     if ((index1 === 0 && direction === 'backward') || (index1 === this.containerList().length-1 && direction === 'forward')) {
       return;

@@ -130,14 +130,14 @@ export class DashboardComponent {
 
   data: Widget[] = [
     {
-      id: 1,
+      id: "1",
       name: "User Details",
       rows: 8,
       columns: 16,
       content: ContainerComponent,
       children: [
         {
-          id: 2,
+          id: "2",
           name: "First Name",
           value: "John",
           rows: 4,
@@ -145,14 +145,14 @@ export class DashboardComponent {
           content: FormInputComponent,
         },
         {
-          id: 3,
+          id: "3",
           name: "Last Name",
           rows: 1,
           columns: 4,
           content: FormInputComponent,
         },
         {
-          id: 4,
+          id: "4",
           name: "Address",
           rows: 1,
           columns: 4,

@@ -1,4 +1,4 @@
-import {Component, input, InputSignal, signal, OnInit} from '@angular/core';
+import {Component, input, InputSignal, signal, OnInit, Inject} from '@angular/core';
 import {Widget} from '../../models/widget';
 import {MatButtonModule} from '@angular/material/button'
 import {MatIcon} from '@angular/material/icon'
@@ -6,6 +6,7 @@ import {WidgetSettingComponent} from "./widget-setting/widget-setting.component"
 import {FormInputComponent} from '../elements/form-input/form-input.component';
 import {NgComponentOutlet} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import {UtilsService} from "../../utils.service";
 
 
 @Component({
@@ -21,11 +22,15 @@ import {MatMenuModule} from '@angular/material/menu';
                 <mat-icon>list</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addItem()">Add</button>
+                <button mat-menu-item [matMenuTriggerFor]="menuItems">Add</button>
+                <mat-menu #menuItems="matMenu">
+                    <button mat-menu-item (click)="addItem('input')">input field</button>
+                    <button mat-menu-item (click)="addItem('container')">container</button>
+                </mat-menu>
                 <button mat-menu-item (click)="openSettings()">Settings</button>
                 <button mat-menu-item (click)="removeItem()">Remove</button>
             </mat-menu>
-            
+
             @if (data().showSettings) {
                 <app-widget-setting [data]="data()" [containerList]="containerList()"></app-widget-setting>
             }
@@ -80,17 +85,18 @@ import {MatMenuModule} from '@angular/material/menu';
 
 })
 export class ContainerComponent implements OnInit {
-
     data: InputSignal<Widget> = input.required<Widget>();
     containerList: InputSignal<Widget[]> = input.required<Widget[]>();
+
+    constructor(private utils: UtilsService) { }
 
     ngOnInit() {
         console.log(this.data());
     }
 
-    addItem() {
+    addItem(type:any | "input" | "container") {
         console.log('Add item');
-        let child: Widget = {id: 101, children:[], content: FormInputComponent, name: "new input filed", value: "new value"};
+        let child: Widget = {id: this.utils.uuidv4(), children:[], content: FormInputComponent, name: "new input filed", value: "new value"};
         this.data().children?.push(child);
         // Implement add item logic here
     }
