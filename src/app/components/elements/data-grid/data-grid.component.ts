@@ -63,11 +63,19 @@ export class DataGridComponent implements OnInit {
     if (this.jsonData.length > 0) {
       this.displayedColumns = Object.keys(this.jsonData[0]);
       this.dataSource.data = this.jsonData;
+      // this.dataSource.filterPredicate = (data, filter) => {
+      //   const dataStr = Object.keys(data).reduce((currentTerm, key) => {
+      //     return currentTerm + (data[key] && data[key].toString().toLowerCase() || '') + ' ';
+      //   }, '').trim().toLowerCase();
+      //   return false;
+      // };
     }
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.data = this.jsonData.filter(row => {
+      return Object.values(row).filter(item => String(item).toLowerCase().includes(filterValue)).length > 0;
+    });
   }
 }
