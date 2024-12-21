@@ -9,7 +9,7 @@ import { Widget } from '../../../models/widget';
   imports: [MatInputModule, MatFormFieldModule],
   template: `
     <div class="formInputComponent">
-      <mat-form-field>
+      <mat-form-field >
         <mat-label>{{this.data().name}}</mat-label>
         <input matInput [value]="value" (change)="updateData($event)">
       </mat-form-field>
@@ -17,10 +17,14 @@ import { Widget } from '../../../models/widget';
   `,
   styles: `
   .formInputComponent {
-    width: 100%;
-    margin: 10px 0;
-    padding: 0 10px;
-    color: red;
+    width: auto;
+    margin: 8px;
+    padding: 8px;
+    background-color: aqua;
+    overflow-block: clip;
+    overflow: auto;
+   
+    
   }
   `
 })
