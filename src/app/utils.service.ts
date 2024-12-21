@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import {Widget} from "./models/widget";
+import {FormInputComponent} from "./components/elements/form-input/form-input.component";
+import {ContainerComponent} from "./components/widget/container.component";
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +18,69 @@ export class UtilsService {
           return v.toString(16);
         });
   }
+
+    swapWidgetsById(id1: string, direction: 'forward' | 'backward', containerList: Widget[]) {
+        const index1 = containerList.findIndex(widget => widget.id === id1);
+        if ((index1 === 0 && direction === 'backward') || (index1 === containerList.length - 1 && direction === 'forward')) {
+            return;
+        }
+
+        const index2 = direction === 'forward' ? index1 + 1 : direction === 'backward' ? index1 - 1 : index1;
+
+        if (index1 === -1 || index2 === -1) {
+            console.error('Invalid widget IDs');
+            return;
+        }
+        const temp = containerList[index1];
+        containerList[index1] = containerList[index2];
+        containerList[index2] = temp;
+
+    }
+    addItem(type: any | "input" | "container", data: Widget | any) {
+        console.log('Add item');
+
+        // Implement add item logic here
+        switch (type) {
+            case "input": {
+                let child: Widget = {
+                    id: this.uuidv4(),
+                    children: [],
+                    content: FormInputComponent,
+                    name: "new input filed",
+                    value: "new value"
+                };
+                data.children?.push(child);
+                break;
+            }
+            case "container": {
+                let child: Widget = {
+                    id: this.uuidv4(),
+                    children: [],
+                    content: ContainerComponent,
+                    name: "new container",
+                    value: "new value"
+                };
+                data.children?.push(child);
+                break;
+            }
+            default: {
+                //statements;
+                break;
+            }
+        }
+    }
+
+    openSettings(data: Widget) {
+        console.log('Open settings');
+        data.showSettings = true;
+    }
+
+    removeItem(data: Widget, containerList: Widget[]) {
+        console.log('Remove item');
+        const widgets = containerList.filter(widget => widget.id !== data.id);
+        containerList.splice(0, containerList.length);
+        containerList.push( ...widgets);
+
+
+    }
 }

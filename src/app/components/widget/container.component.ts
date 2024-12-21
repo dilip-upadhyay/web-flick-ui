@@ -24,11 +24,11 @@ import {UtilsService} from "../../utils.service";
             <mat-menu #menu="matMenu">
                 <button mat-menu-item [matMenuTriggerFor]="menuItems">Add</button>
                 <mat-menu #menuItems="matMenu">
-                    <button mat-menu-item (click)="addItem('input')">input field</button>
-                    <button mat-menu-item (click)="addItem('container')">container</button>
+                    <button mat-menu-item (click)="utils.addItem('input', data())">input field</button>
+                    <button mat-menu-item (click)="utils.addItem('container', data())">container</button>
                 </mat-menu>
-                <button mat-menu-item (click)="openSettings()">Settings</button>
-                <button mat-menu-item (click)="removeItem()">Remove</button>
+                <button mat-menu-item (click)="utils.openSettings(data())">Settings</button>
+                <button mat-menu-item (click)="utils.removeItem(data(), containerList())">Remove</button>
             </mat-menu>
 
             @if (data().showSettings) {
@@ -88,27 +88,13 @@ export class ContainerComponent implements OnInit {
     data: InputSignal<Widget> = input.required<Widget>();
     containerList: InputSignal<Widget[]> = input.required<Widget[]>();
 
-    constructor(private utils: UtilsService) { }
+    constructor(protected utils: UtilsService) {
+    }
 
     ngOnInit() {
         console.log(this.data());
     }
 
-    addItem(type:any | "input" | "container") {
-        console.log('Add item');
-        let child: Widget = {id: this.utils.uuidv4(), children:[], content: FormInputComponent, name: "new input filed", value: "new value"};
-        this.data().children?.push(child);
-        // Implement add item logic here
-    }
 
-    openSettings() {
-        console.log('Open settings');
-        this.data().showSettings = true;
-    }
-
-    removeItem() {
-        console.log('Remove item');
-        // Implement remove item logic here
-    }
 
 }
