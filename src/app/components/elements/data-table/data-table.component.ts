@@ -7,7 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-data-table',
@@ -17,9 +16,7 @@ import { NgFor, NgIf } from '@angular/common';
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
-    NgFor,
-    NgIf
+    MatSortModule
   ],
   template: `
     <div class="mat-elevation-z8">
