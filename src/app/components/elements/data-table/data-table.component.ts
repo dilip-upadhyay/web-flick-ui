@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NgFor, NgIf, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-data-table',
@@ -18,8 +18,6 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    NgFor,
-    NgIf,
     CommonModule
   ],
   template: `
@@ -32,17 +30,20 @@ import { NgFor, NgIf, CommonModule } from '@angular/common';
         <table mat-table [dataSource]="dataSource" matSort>
 
           <!-- Dynamic Columns -->
-          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              {{ column | titlecase }}
-              <div>
-                <mat-form-field appearance="fill">
-                  <input matInput (keyup)="applyColumnFilter($event, column)" placeholder="Filter {{ column }}">
-                </mat-form-field>
-              </div>
-            </th>
-            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
-          </ng-container>
+          @for(column of displayedColumns; track column) {
+            <ng-container [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ column | titlecase }}
+                <div>
+                  <mat-form-field appearance="fill">
+                    <input matInput (keyup)="applyColumnFilter($event, column)" placeholder="Filter {{ column }}">
+                  </mat-form-field>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+            </ng-container>
+          }
+
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
