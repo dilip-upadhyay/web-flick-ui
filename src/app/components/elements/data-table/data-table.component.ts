@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -71,13 +71,22 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class DataTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'age', 'email'];
+export class DataTableComponent implements AfterViewInit , OnInit{
+  ngOnInit(): void {
+    this.setDisplayedColumnsFromElementData();
+  }
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   columnFilters: { [key: string]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  setDisplayedColumnsFromElementData() {
+    if (ELEMENT_DATA.length > 0) {
+      this.displayedColumns = Object.keys(ELEMENT_DATA[0]);
+    }
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
