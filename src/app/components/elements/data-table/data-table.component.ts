@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { CommonModule } from '@angular/common';
+import { NgFor, NgIf, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-data-table',
@@ -18,24 +18,31 @@ import { CommonModule } from '@angular/common';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    NgFor,
+    NgIf,
     CommonModule
   ],
   template: `
     <div class="mat-elevation-z8">
       <mat-form-field appearance="fill">
         <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. John Doe">
+        <input matInput (keyup)="applyGlobalFilter($event)" placeholder="Ex. John Doe">
       </mat-form-field>
       <div class="table-container">
         <table mat-table [dataSource]="dataSource" matSort>
 
           <!-- Dynamic Columns -->
-          @for (column of displayedColumns; track $index) {
-            <ng-container [matColumnDef]="column">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column | titlecase }}</th>
-              <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
-            </ng-container>
-          }
+          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ column | titlecase }}
+              <div>
+                <mat-form-field appearance="fill">
+                  <input matInput (keyup)="applyColumnFilter($event, column)" placeholder="Filter {{ column }}">
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -66,6 +73,7 @@ import { CommonModule } from '@angular/common';
 export class DataTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'age', 'email'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  columnFilters: { [key: string]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -75,13 +83,30 @@ export class DataTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyGlobalFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  applyColumnFilter(event: Event, column: string) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.columnFilters[column] = filterValue.trim().toLowerCase();
+    this.dataSource.filter = this.createFilter();
+  }
+
+  createFilter(): string {
+    const filterFunction = (data: any, filter: string): boolean => {
+      const searchTerms = JSON.parse(filter);
+      return Object.keys(searchTerms).every(key => {
+        return data[key].toString().toLowerCase().includes(searchTerms[key]);
+      });
+    };
+    this.dataSource.filterPredicate = filterFunction;
+    return JSON.stringify(this.columnFilters);
   }
 }
 
