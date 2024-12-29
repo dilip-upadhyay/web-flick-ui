@@ -3,6 +3,7 @@ import {Widget} from "./models/widget";
 import {FormInputComponent} from "./components/elements/form-input/form-input.component";
 import {ContainerComponent} from "./components/widget/container.component";
 import {DataGridComponent} from "./components/elements/data-grid/data-grid.component";
+import { DataTableComponent } from './components/elements/data-table/data-table.component';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +83,7 @@ export class UtilsService {
                 let child: Widget = {
                     id: this.uuidv4(),
                     children: [],
-                    content: DataGridComponent,
+                    content: DataTableComponent,
                     name: "new container",
                     value: {jsonData:this.sampleData, displayedColumns: Object.keys(this.sampleData[0])}
                 };
