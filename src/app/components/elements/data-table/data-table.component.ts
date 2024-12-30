@@ -43,9 +43,8 @@ import { Widget } from "../../../models/widget";
           <!-- Dynamic Columns -->
           @for(column of displayedColumns; track column) {
           <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              {{ column | titlecase }}
-              <div>
+            <th mat-header-cell *matHeaderCellDef >
+            <div>
                 <mat-form-field appearance="fill">
                   <input
                     matInput
@@ -54,6 +53,8 @@ import { Widget } from "../../../models/widget";
                   />
                 </mat-form-field>
               </div>
+              <span mat-sort-header>{{ column | titlecase }}</span>
+             
             </th>
             <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
           </ng-container>
