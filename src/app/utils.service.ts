@@ -71,10 +71,10 @@ export class UtilsService {
             case "container": {
                 let child: Widget = {
                     id: this.uuidv4(),
+                    rows: 7,
                     children: [],
                     content: ContainerComponent,
-                    name: "new container",
-                    value: "new value"
+                    name: "new container"
                 };
                 data.children?.push(child);
                 break;
@@ -84,7 +84,7 @@ export class UtilsService {
                     id: this.uuidv4(),
                     children: [],
                     content: DataTableComponent,
-                    name: "new container",
+                    name: "new data grid",
                     value: {jsonData:this.sampleData, displayedColumns: Object.keys(this.sampleData[0])}
                 };
                 data.children?.push(child);

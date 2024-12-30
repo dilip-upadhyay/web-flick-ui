@@ -39,7 +39,7 @@ import {UtilsService} from "../../utils.service";
                 @for (container of data().children; track $index) {
                     @if (container.content) {
                         <div class="widget-container">
-                            <ng-container [ngComponentOutlet]="container.content" [ngComponentOutletInputs]="{ data: container}"/>
+                            <ng-container [ngComponentOutlet]="container.content" [ngComponentOutletInputs]="{ data: container, containerList: data().children}"/>
                         </div>
                     } @else {
                         <app-container [containerList]="data().children ?? []" [data]="container"/>

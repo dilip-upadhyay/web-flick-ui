@@ -51,7 +51,6 @@ import {UtilsService} from "../utils.service";
             <mat-menu #menu="matMenu">
                 <button mat-menu-item [matMenuTriggerFor]="menuItems">Add</button>
                 <mat-menu #menuItems="matMenu">
-                    <button mat-menu-item (click)="utils.addItem('input', data)">input field</button>
                     <button mat-menu-item (click)="utils.addItem('container', data)">container</button>
                 </mat-menu>
             </mat-menu>
@@ -130,8 +129,15 @@ export class DashboardComponent {
             name: "Widget 1",
             rows: 1,
             columns: 1,
-            content: ContainerComponent,
-            children: []
+            content: undefined,
+            children: [{
+                id: this.utils.uuidv4(),
+                name: "Widget 2",
+                rows: 7,
+                columns: 1,
+                content: ContainerComponent,
+                children: []
+            }]
         };
     }
 
