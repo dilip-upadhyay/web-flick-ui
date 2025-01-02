@@ -45,8 +45,8 @@ import { HttpConsumerService } from "../../../http-consumer.service";
           <!-- Dynamic Columns -->
           @for(column of displayedColumns; track column) {
           <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef >
-            <div>
+            <th mat-header-cell *matHeaderCellDef>
+              <div>
                 <mat-form-field appearance="fill">
                   <input
                     matInput
@@ -56,7 +56,6 @@ import { HttpConsumerService } from "../../../http-consumer.service";
                 </mat-form-field>
               </div>
               <span mat-sort-header>{{ column | titlecase }}</span>
-             
             </th>
             <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
           </ng-container>
@@ -105,22 +104,53 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   constructor(private httpConsumerService: HttpConsumerService) {}
 
   ngOnInit(): void {
-      const payload = {
-      "datasourceName":"testDataSource",
-      "tableName": "test_table4"
-      
+    this.createDataSource();
   }
-    this.httpConsumerService.post("http://localhost:8080/web-flick-resource/fetch-data-table", payload).subscribe((data: any) => {
-      console.log(data);
-      this.ELEMENT_DATA = data;
-      if(this.data().value && this.data().value.jsonData) {
-        this.ELEMENT_DATA = this.data().value.jsonData;
-      }
-      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-      this.setDisplayedColumnsFromElementData();
-    }
 
-    );
+  private createDataSource() {
+    const payload = {
+      hostname: "localhost",
+      port: "3306",
+      datasourceName: "testDataSource",
+      databaseName: "test",
+      username: "root",
+      password: "password",
+      database: "MYSQL",
+    };
+    this.httpConsumerService
+      .postText(
+        "http://localhost:8080/web-flick-resource/create-data-source",
+        payload
+      )
+      .subscribe((data: any) => {
+        console.log(data);
+
+        // wait for 2 seconds to fetch data
+        setTimeout(() => {
+          this.fetchData();
+        }, 2000);
+      });
+  }
+
+  private fetchData() {
+    const payload = {
+      datasourceName: "testDataSource",
+      tableName: "test_table4",
+    };
+    this.httpConsumerService
+      .post(
+        "http://localhost:8080/web-flick-resource/fetch-data-table",
+        payload
+      )
+      .subscribe((data: any) => {
+        console.log(data);
+        this.ELEMENT_DATA = data;
+        if (this.data().value && this.data().value.jsonData) {
+          this.ELEMENT_DATA = this.data().value.jsonData;
+        }
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+        this.setDisplayedColumnsFromElementData();
+      });
   }
 
   setDisplayedColumnsFromElementData() {
@@ -138,8 +168,7 @@ export class DataTableComponent implements AfterViewInit, OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-      this.dataSource?.paginator?.firstPage();
-    
+    this.dataSource?.paginator?.firstPage();
   }
 
   applyColumnFilter(event: Event, column: string) {
@@ -159,73 +188,5 @@ export class DataTableComponent implements AfterViewInit, OnInit {
     return JSON.stringify(this.columnFilters);
   }
 
-  ELEMENT_DATA: any[] = [
-    { id: 1, name: "John Doe", age: 25, email: "john.doe@example.com" },
-    { id: 2, name: "Jane Smith", age: 30, email: "jane.smith@example.com" },
-    {
-      id: 3,
-      name: "Michael Johnson",
-      age: 35,
-      email: "michael.johnson@example.com",
-    },
-    { id: 4, name: "Emily Davis", age: 28, email: "emily.davis@example.com" },
-    { id: 5, name: "William Brown", age: 40, email: "william.brown@example.com" },
-    {
-      id: 6,
-      name: "Jessica Wilson",
-      age: 22,
-      email: "jessica.wilson@example.com",
-    },
-    {
-      id: 7,
-      name: "David Martinez",
-      age: 33,
-      email: "david.martinez@example.com",
-    },
-    { id: 8, name: "Sarah Lee", age: 29, email: "sarah.lee@example.com" },
-    {
-      id: 9,
-      name: "James Anderson",
-      age: 45,
-      email: "james.anderson@example.com",
-    },
-    {
-      id: 10,
-      name: "Patricia Thomas",
-      age: 38,
-      email: "patricia.thomas@example.com",
-    },
-    {
-      id: 11,
-      name: "Robert Jackson",
-      age: 50,
-      email: "robert.jackson@example.com",
-    },
-    { id: 12, name: "Linda White", age: 27, email: "linda.white@example.com" },
-    {
-      id: 13,
-      name: "Charles Harris",
-      age: 36,
-      email: "charles.harris@example.com",
-    },
-    {
-      id: 14,
-      name: "Barbara Clark",
-      age: 32,
-      email: "barbara.clark@example.com",
-    },
-    { id: 15, name: "Thomas Lewis", age: 41, email: "thomas.lewis@example.com" },
-    { id: 16, name: "Nancy Walker", age: 34, email: "nancy.walker@example.com" },
-    { id: 17, name: "Daniel Hall", age: 26, email: "daniel.hall@example.com" },
-    { id: 18, name: "Karen Allen", age: 39, email: "karen.allen@example.com" },
-    {
-      id: 19,
-      name: "Matthew Young",
-      age: 31,
-      email: "matthew.young@example.com",
-    },
-    { id: 20, name: "Betty King", age: 43, email: "betty.king@example.com" },
-  ];
-  
+  ELEMENT_DATA: any[] = [];
 }
-
