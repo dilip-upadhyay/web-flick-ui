@@ -5,6 +5,7 @@ import {
   OnInit,
   InputSignal,
   input,
+  Inject,
 } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -16,6 +17,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { CommonModule } from "@angular/common";
 import { Widget } from "../../../models/widget";
+import { HttpConsumerService } from "../../../http-consumer.service";
 
 @Component({
   selector: "app-data-table",
@@ -97,16 +99,28 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   data: InputSignal<Widget> = input.required<Widget>();
   displayedColumns: string[] = [];
   columnFilters: { [key: string]: string } = {};
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  constructor(private httpConsumerService: HttpConsumerService) {}
+
   ngOnInit(): void {
-    if(this.data().value && this.data().value.jsonData) {
-      this.ELEMENT_DATA = this.data().value.jsonData;
+      const payload = {
+      "datasourceName":"testDataSource",
+      "tableName": "test_table4"
+      
+  }
+    this.httpConsumerService.post("http://localhost:8080/web-flick-resource/fetch-data-table", payload).subscribe((data: any) => {
+      console.log(data);
+      this.ELEMENT_DATA = data;
+      if(this.data().value && this.data().value.jsonData) {
+        this.ELEMENT_DATA = this.data().value.jsonData;
+      }
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.setDisplayedColumnsFromElementData();
     }
-    this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-    this.setDisplayedColumnsFromElementData();
+
+    );
   }
 
   setDisplayedColumnsFromElementData() {
@@ -124,9 +138,8 @@ export class DataTableComponent implements AfterViewInit, OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+      this.dataSource?.paginator?.firstPage();
+    
   }
 
   applyColumnFilter(event: Event, column: string) {

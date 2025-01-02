@@ -49,8 +49,6 @@ import {UtilsService} from "../../utils.service";
             }
 
         </div>
-
-
     `,
     styles: `
         :host {

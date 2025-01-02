@@ -10,18 +10,42 @@ import { DataTableComponent } from './components/elements/data-table/data-table.
 })
 export class UtilsService {
     sampleData = [
-        { id: 1, name: 'John Doe', age: 28, email: 'john.doe@example.com' },
-        { id: 2, name: 'Jane Smith', age: 34, email: 'jane.smith@example.com' },
-        { id: 3, name: 'Michael Johnson', age: 45, email: 'michael.johnson@example.com' },
-        { id: 4, name: 'Emily Davis', age: 23, email: 'emily.davis@example.com' },
-        { id: 1, name: 'John Doe', age: 28, email: 'john.doe@example.com' },
-        { id: 2, name: 'Jane Smith', age: 34, email: 'jane.smith@example.com' },
-        { id: 3, name: 'Michael Johnson', age: 45, email: 'michael.johnson@example.com' },
-        { id: 4, name: 'Emily Davis', age: 23, email: 'emily.davis@example.com' },
-        { id: 1, name: 'John Doe', age: 28, email: 'john.doe@example.com' },
-        { id: 2, name: 'Jane Smith', age: 34, email: 'jane.smith@example.com' },
-        { id: 3, name: 'Michael Johnson', age: 45, email: 'michael.johnson@example.com' },
-        { id: 4, name: 'Emily Davis', age: 23, email: 'emily.davis@example.com' }
+        {
+            "VENDER": "TCS",
+            "PARTY_PHONE": "7709152725",
+            "START_DATE": "2024-12-31T06:19:24.948+00:00",
+            "TOKEN_ID": "123",
+            "ID": 1,
+            "CONTRACT_TERM_NO": "15",
+            "NAME": "EFC"
+        },
+        {
+            "VENDER": "Infosys",
+            "PARTY_PHONE": "7709152725",
+            "START_DATE": "2024-12-01T06:19:24.948+00:00",
+            "TOKEN_ID": "123",
+            "ID": 2,
+            "CONTRACT_TERM_NO": "15",
+            "NAME": "EFC"
+        },
+        {
+            "VENDER": "TCS",
+            "PARTY_PHONE": "7709152725",
+            "START_DATE": "2024-12-31T06:19:24.948+00:00",
+            "TOKEN_ID": "123",
+            "ID": 3,
+            "CONTRACT_TERM_NO": "15",
+            "NAME": "EFC"
+        },
+        {
+            "VENDER": "Infosys",
+            "PARTY_PHONE": "7709152725",
+            "START_DATE": "2024-12-01T06:19:24.948+00:00",
+            "TOKEN_ID": "123",
+            "ID": 4,
+            "CONTRACT_TERM_NO": "15",
+            "NAME": "EFC"
+        }
     ];
 
   constructor() { }
