@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpConsumerService } from '../../http-consumer.service';
+import { HttpConsumerService } from '../../services/http-consumer.service';
 
 @Component({
   selector: 'app-data-source',
@@ -98,7 +98,7 @@ export class DataSourceComponent {
 
   onSubmit() {
     if (this.dataSourceForm.valid) {
-      this.httpService.post("/api/web-flick-resource/create-data-source", this.dataSourceForm.value)
+      this.httpService.createDataSource(this.dataSourceForm.value)
         .subscribe({
           next: response => {
             console.log(response);
