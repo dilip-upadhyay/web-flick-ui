@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpConsumerService } from '../../services/http-consumer.service';
 
 @Component({
   selector: 'app-data-source',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, HttpClientModule],
   template: `
     <form [formGroup]="dataSourceForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -83,7 +85,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class DataSourceComponent {
   dataSourceForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private httpService: HttpConsumerService) {
     this.dataSourceForm = this.fb.group({
       hostname: ['', Validators.required],
       port: ['', Validators.required],
@@ -97,7 +99,10 @@ export class DataSourceComponent {
 
   onSubmit() {
     if (this.dataSourceForm.valid) {
-      console.log(this.dataSourceForm.value);
+      this.httpService.createDataSource(this.dataSourceForm.value)
+        .subscribe(response => {
+          console.log(response);
+        });
     }
   }
 }
