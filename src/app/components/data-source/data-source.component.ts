@@ -7,7 +7,7 @@ import { HttpConsumerService } from '../../services/http-consumer.service';
 @Component({
   selector: 'app-data-source',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, HttpClientModule],
   template: `
     <form [formGroup]="dataSourceForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
