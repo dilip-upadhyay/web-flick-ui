@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpConsumerService } from '../../services/http-consumer.service';
+import { HttpConsumerService } from '../../http-consumer.service';
 
 @Component({
   selector: 'app-data-source',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, HttpClientModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule],
   template: `
     <form [formGroup]="dataSourceForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -99,9 +98,14 @@ export class DataSourceComponent {
 
   onSubmit() {
     if (this.dataSourceForm.valid) {
-      this.httpService.createDataSource(this.dataSourceForm.value)
-        .subscribe(response => {
-          console.log(response);
+      this.httpService.post("/api/web-flick-resource/create-data-source", this.dataSourceForm.value)
+        .subscribe({
+          next: response => {
+            console.log(response);
+          },
+          error: err => {
+            console.error('Error creating data source:', err);
+          }
         });
     }
   }
